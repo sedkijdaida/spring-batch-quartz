@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+ 
+    <import resource="classpath:spring-batch-context.xml" />
+    
+     <!-- run every 10 seconds -->
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<property name="triggers">
+	  <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="jobDetail" />
+		<property name="cronExpression" value="*/10 * * * * ?" />
+	  </bean>
+	</property>
+  </bean>
+  
+  <bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
+	<property name="jobClass" value="com.demo.springbatch.JobLauncherDetails" />
+	<property name="group" value="quartz-batch" />
+	<property name="jobDataAsMap">
+	  <map>
+		<entry key="jobName" value="examResultJob" />
+		<entry key="jobLocator" value-ref="jobRegistry" />
+		<entry key="jobLauncher" value-ref="jobLauncher" />
+	  </map>
+	</property>
+  </bean>
+    </beans>
