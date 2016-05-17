@@ -81,7 +81,8 @@ public class BatchConfig {
 	@Autowired
 	private StepBuilderFactory stepBuilders;
 
-	private DataBaseConfig dataBaseConfig =  new DataBaseConfig();
+	@Autowired
+	private DataBaseConfig dataBaseConfig ;
 
 	@Bean
 	public ResourcelessTransactionManager transactionManager() {
